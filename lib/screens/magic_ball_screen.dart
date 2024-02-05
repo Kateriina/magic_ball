@@ -11,6 +11,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
   MagicBallService _magicBallService = MagicBallService();
   String _currentAnswer = '';
   bool _loading = false;
+  bool _error = false;
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
 
   void _fetchAnswer() async {
     setState(() {
+      _error = false;
       _loading = true;
       _currentAnswer = '';
     });
@@ -36,6 +38,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
     try {
       String answer = await _magicBallService.getMagicAnswer();
       setState(() {
+        _error = false;
         _currentAnswer = answer;
         _loading = false;
       });
@@ -43,6 +46,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
       setState(() {
         _currentAnswer = 'Error fetching answer';
         _loading = false;
+        _error = true;
       });
     }
   }
@@ -70,27 +74,38 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage('assets/magic_ball.png'),
+                        image: _loading
+                            ? AssetImage('assets/ball_loading.png')
+                            : _error
+                                ? AssetImage('assets/ball_error.png')
+                                : AssetImage('assets/ball_answer.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(60.0),
-                    child: Text(
-                      _currentAnswer,
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.visible,
-                      style: Theme.of(context).textTheme.displayLarge!,
+                  if (_loading)
+                    CircularProgressIndicator() // Loading indicator
+                  else
+                    Padding(
+                      padding: const EdgeInsets.all(85.0),
+                      child: Text(
+                        _currentAnswer,
+                        textAlign: TextAlign.center,
+                        overflow: TextOverflow.visible,
+                        style: Theme.of(context).textTheme.displayLarge!,
+                      ),
                     ),
-                  ),
                 ],
               ),
             ),
             SizedBox(
               height: 54,
             ),
-            Image.asset('assets/shade.png'),
+            Image.asset(_loading
+                ? 'assets/shade_loading.png'
+                : _error
+                    ? 'assets/shade_error.png'
+                    : 'assets/shade_answer.png'),
             SizedBox(
               height: 47,
             ),
@@ -107,4 +122,6 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
       ),
     );
   }
+
+  inProcess() {}
 }
