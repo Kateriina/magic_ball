@@ -50,34 +50,59 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Magic Ball'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(),
       body: Center(
-        child: GestureDetector(
-          onTap: () {
-            _fetchAnswer();
-          },
-          child: Stack(
-            children: [
-              Column(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 136.0,
+            ),
+            GestureDetector(
+              onTap: () {
+                _fetchAnswer();
+              },
+              child: Stack(
+                alignment: Alignment.center,
                 children: [
-                  Image.asset('assets/magic_ball.png'), // Image of magic ball
-                  Image.asset('assets/shade.png'),
+                  Container(
+                    width: 354,
+                    height: 354,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage('magic_ball.png'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(60.0),
+                    child: Text(
+                      _currentAnswer,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.visible,
+                      style: Theme.of(context).textTheme.displayLarge!,
+                    ),
+                  ),
                 ],
-              ), // Image of magic ball
-
-              if (_loading)
-                CircularProgressIndicator() // Loading indicator
-              else
-                Text(
-                  _currentAnswer,
+              ),
+            ),
+            SizedBox(
+              height: 54,
+            ),
+            Image.asset('shade.png'),
+            SizedBox(
+              height: 47,
+            ),
+            Container(
+              width: 175,
+              height: 74,
+              child: Text('Нажмите на шар или потря ',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ), // Display answer
-            ],
-          ),
+                  overflow: TextOverflow.visible,
+                  style: Theme.of(context).textTheme.bodyMedium!),
+            ),
+          ],
         ),
       ),
     );
