@@ -70,7 +70,7 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage('magic_ball.png'),
+                        image: AssetImage('assets/magic_ball.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -90,14 +90,14 @@ class _MagicBallScreenState extends State<MagicBallScreen> {
             SizedBox(
               height: 54,
             ),
-            Image.asset('shade.png'),
+            Image.asset('assets/shade.png'),
             SizedBox(
               height: 47,
             ),
             Container(
               width: 175,
               height: 74,
-              child: Text('Нажмите на шар или потря ',
+              child: Text('Нажмите на шар или потрясите телефон',
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.visible,
                   style: Theme.of(context).textTheme.bodyMedium!),
