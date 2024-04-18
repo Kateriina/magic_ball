@@ -6,7 +6,7 @@ class MagicBallService {
     if (response.statusCode == 200) {
       return response.body
           .replaceAll('{"reading":"', '')
-          .replaceAll('."}', ''); // Replace with actual parsing logic
+          .replaceAll('."}', ''); 
     } else {
       throw Exception('Failed to fetch answer');
     }
